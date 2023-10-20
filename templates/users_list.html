@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>List of Users</h2>
-    <ul>
-        {% for user in users %}
-            <li>{{ user.username }} - {{ user.email }}</li>
-        {% endfor %}
-    </ul>
+
+    <div class="lists-centered-container">
+        <h2>List of Users</h2>
+        <ul class="lists-on-center-page">
+            {% for user in users %}
+                <li>{{ user.username }} - {{ user.email }}</li>
+            {% endfor %}
+        </ul>
+        <button onclick="location.href='{% url 'main_page' %}'" class="back-button">На головну</button>
+    </div>
+
 {% endblock %}

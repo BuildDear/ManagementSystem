@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main-buttons-container">
+{#    <a href="{% url 'create_user' %}" class="rounded-button">Створити користувача</a>#}
+{#    <a href="{% url 'create_group' %}" class="rounded-button">Створити групу</a>#}
+    <button onclick="location.href='{% url 'users_list' %}'" class="rounded-button">Переглянути список всіх користувачів</button>
+    <button onclick="location.href='{% url 'groups_list' %}'" class="rounded-button">Переглянути список всіх груп</button>
+
+</div>
+{% endblock %}

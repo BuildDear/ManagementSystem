@@ -1,0 +1,132 @@
+/*first page*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9; /* Легкий відтінок синього */
+    color: #333;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header, footer {
+    background-color: #0057a8; /* Темний синій */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+header:hover, footer:hover {
+    background-color: #003f7c; /* Темний синій при наведенні */
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.start-button {
+    background-color: #0073e6; /* Синій */
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    padding: 20px 40px;
+    font-size: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.start-button:hover {
+    background-color: #0057a8; /* Темний синій при наведенні */
+    transform: scale(1.05); /* Збільшення при наведенні */
+}
+
+/*first page*/
+
+
+
+/*main page*/
+.main-buttons-container {
+    display: flex; /* використання flexbox */
+    flex-direction: row; /* розміщення дочірніх елементів у вертикальному напрямку */
+    justify-content: center; /* центрування дочірніх елементів по гор */
+    align-items: center; /* центрування дочірніх елементів по горизонталі */
+    height: 100vh; /* висота контейнера дорівнює висоті вікна переглядача */
+    position: relative;
+}
+
+
+.rounded-button {
+    width: 500px; /* Наприклад, ширина кнопки 250 пікселів */
+    text-align: center; /* Щоб текст на кнопці був по центру */
+    font-size: 20px; /* Збільшення розміру тексту */
+    padding: 100px 30px; /* Збільшення розміру кнопки */
+    background-color: #0073e6; /* Синій колір */
+    color: #fff; /* Білий колір тексту */
+    border: none;
+    border-radius: 15px; /* Закруглені краї */
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s; /* Додаємо анімацію */
+    margin: 10px; /* Відступи між кнопками */
+}
+
+/* Анімація при наведенні */
+.rounded-button:hover {
+    background-color: #005bb5; /* Темний синій колір при наведенні */
+
+}
+
+/* Додайте стилі для активного стану кнопки (коли натиснуто) */
+.rounded-button:active {
+    background-color: #004494; /* Ще темніший синій */
+    transform: scale(1); /* Повертаємо розмір до початкового стану при натисканні */
+}
+
+/*main page*/
+
+/*user_list*/
+.lists-centered-container {
+    text-align: center; /* центрування тексту */
+    max-width: 600px; /* обмеження максимальної ширини контейнера */
+    margin: 0 auto; /* автоматичний відступ зліва та справа для центрування блоку */
+    padding: 20px; /* додатковий відступ навколо змісту */
+    background-color: #f5f5f5; /* світло-сірий колір фону */
+    border-radius: 10px; /* закруглені кути */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* легка тінь */
+}
+
+.lists-on-center-page {
+    list-style-type: none; /* видалення маркерів списку */
+    padding-left: 0; /* видалення відступів зліва */
+}
+
+.lists-on-center-page li {
+    padding: 10px 0; /* вертикальний відступ для елементів списку */
+    border-bottom: 1px solid #e0e0e0; /* горизонтальна лінія між елементами */
+}
+
+.back-button {
+    margin-top: 20px; /* верхній відступ для кнопки */
+    padding: 10px 20px; /* відступи навколо тексту кнопки */
+    background-color: #0073e6; /* синій колір кнопки */
+    border: none;
+    border-radius: 20px; /* закруглені кути кнопки */
+    color: #fff; /* білий колір тексту */
+    cursor: pointer;
+    transition: background-color 0.3s; /* плавний перехід для фонового кольору */
+}
+
+.back-button:hover {
+    background-color: #005bb5; /* трохи темніший синій колір при наведенні */
+}
+
+/*user_list*/
