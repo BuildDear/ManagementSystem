@@ -9,7 +9,8 @@
                 <li>{{ user.username }} - {{ user.email }}</li>
             {% endfor %}
         </ul>
-        <button onclick="location.href='{% url 'main_page' %}'" class="back-button">На головну</button>
+        <button onclick="location.href='{% url 'main_page' %}'" class="btn btn-outline-danger">Back</button>
+        <button onclick="location.href='{% url 'main_page' %}'" class="btn btn-outline-success">Add group</button>
     </div>
 
 {% endblock %}

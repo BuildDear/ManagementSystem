@@ -114,19 +114,10 @@ main {
     border-bottom: 1px solid #e0e0e0; /* горизонтальна лінія між елементами */
 }
 
-.back-button {
-    margin-top: 20px; /* верхній відступ для кнопки */
-    padding: 10px 20px; /* відступи навколо тексту кнопки */
-    background-color: #0073e6; /* синій колір кнопки */
-    border: none;
-    border-radius: 20px; /* закруглені кути кнопки */
-    color: #fff; /* білий колір тексту */
-    cursor: pointer;
-    transition: background-color 0.3s; /* плавний перехід для фонового кольору */
-}
-
-.back-button:hover {
-    background-color: #005bb5; /* трохи темніший синій колір при наведенні */
+.form-control:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-color: #007bff;
+    transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
 
 /*user_list*/
