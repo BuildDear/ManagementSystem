@@ -79,13 +79,11 @@ main {
     margin: 10px; /* Відступи між кнопками */
 }
 
-/* Анімація при наведенні */
 .rounded-button:hover {
     background-color: #005bb5; /* Темний синій колір при наведенні */
 
 }
 
-/* Додайте стилі для активного стану кнопки (коли натиснуто) */
 .rounded-button:active {
     background-color: #004494; /* Ще темніший синій */
     transform: scale(1); /* Повертаємо розмір до початкового стану при натисканні */
@@ -93,31 +91,14 @@ main {
 
 /*main page*/
 
-/*user_list*/
-.lists-centered-container {
+/*lists*/
+.lists-centered-container-11 {
     text-align: center; /* центрування тексту */
-    max-width: 600px; /* обмеження максимальної ширини контейнера */
+    max-width: 100%; /* обмеження максимальної ширини контейнера */
     margin: 0 auto; /* автоматичний відступ зліва та справа для центрування блоку */
     padding: 20px; /* додатковий відступ навколо змісту */
     background-color: #f5f5f5; /* світло-сірий колір фону */
-    border-radius: 10px; /* закруглені кути */
+    border-radius: 30px; /* закруглені кути */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* легка тінь */
 }
-
-.lists-on-center-page {
-    list-style-type: none; /* видалення маркерів списку */
-    padding-left: 0; /* видалення відступів зліва */
-}
-
-.lists-on-center-page li {
-    padding: 10px 0; /* вертикальний відступ для елементів списку */
-    border-bottom: 1px solid #e0e0e0; /* горизонтальна лінія між елементами */
-}
-
-.form-control:focus {
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    border-color: #007bff;
-    transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
-}
-
-/*user_list*/
+/*lists*/

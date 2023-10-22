@@ -20,3 +20,15 @@ class UserForm(forms.ModelForm):
             'email': forms.EmailInput(
                 attrs={'class': 'form-control py-4', 'placeholder': 'Enter your email'}),
         }
+
+
+class GroupForm(forms.ModelForm):
+
+    class Meta:
+        model = Group
+        fields = ['name', 'description']
+        exclude = ['users_count']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter a group name'}),
+            'description': forms.TextInput(attrs={'class': 'form-control py-4', 'placeholder': 'Enter a description'}),
+        }
