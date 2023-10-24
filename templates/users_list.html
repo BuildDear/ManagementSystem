@@ -19,18 +19,18 @@
         </thead>
         <tbody>
             {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.first_name }}</td>
-                <td>{{ user.last_name }}</td>
-                <td>{{ user.group }}</td>
-                <td>{{ user.created }}</td>
-                <td>
-                    <a href="{% url 'user_edit_logic' user.id %}" class="btn btn-outline-info">Edit</a>
-                    <a href="{% url 'user_delete_logic' user.id %}" class="btn btn-outline-danger">Delete</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.group }}</td>
+                    <td>{{ user.created }}</td>
+                    <td>
+                        <a href="{% url 'user_edit_logic' user.id %}" class="btn btn-outline-info">Edit</a>
+                        <a href="{% url 'user_delete_logic' user.id %}" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>

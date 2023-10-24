@@ -71,7 +71,7 @@ def user_edit_logic(request, user_id):
         'form': form,
         'title': 'Edit user',
         'action_url': reverse('user_edit_logic', args=[user_id]),
-        'button_label': 'Update user'
+        'button_label': 'Save changes'
     }
     return render(request, 'add_entity.html', context)
 
@@ -82,8 +82,11 @@ def user_delete_logic(request, user_id):
     if request.method == "POST":
         user_instance.delete()
         return redirect('user_list_page')
-
-    return render(request, 'confirm_delete.html', {'object': user_instance})
+    context = {
+        'object': user_instance,
+        'is_user': isinstance(user_instance, User),
+    }
+    return render(request, 'confirm_delete.html', context)
 
 
 # Handle logic for adding a new group.
@@ -122,13 +125,15 @@ def group_edit_logic(request, group_id):
             return redirect('group_list_page')
 
     # Prepare the context for rendering the form.
+    users_in_group = group_instance.users.all()
     context = {
         'form': form,
         'title': 'Edit group',
         'action_url': reverse('group_edit_logic', args=[group_id]),
-        'button_label': 'Update group'
+        'button_label': 'Save changes',
+        'users': users_in_group,
     }
-    return render(request, 'add_entity.html', context)
+    return render(request, 'edit_group.html', context)
 
 
 # Handle logic for deleting a group.
@@ -145,4 +150,8 @@ def group_delete_logic(request, group_id):
             messages.error(request, f"You can't delete the group ({group_instance.name}) because it's not empty.")
             return redirect('group_list_page')
 
-    return render(request, 'confirm_delete.html', {'object': group_instance})
+    context = {
+        'object': group_instance,
+        'is_user': isinstance(group_instance, User),
+    }
+    return render(request, 'confirm_delete.html', context)

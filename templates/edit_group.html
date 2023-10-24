@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex align-items-center justify-content-center" style="height: 100vh; border-radius: 30px;">
+    <div class="lists-centered-container-11">
+        <h2>{{ title }}</h2>
+        <form method="post" action="{{ action_url }}">
+            {% csrf_token %}
+
+            <div class="form-row">
+                {% for field in form %}
+                    <div class="col-md-6">
+                        <label class="small mb-1" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="error">{{ field.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    {% if forloop.counter|divisibleby:2 and not forloop.last %}
+                        </div>
+                        <div class="form-row">
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Group</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td>{{ user.group }}</td>
+                            <td>{{ user.created }}</td>
+                            <td>
+                                <a href="{% url 'user_edit_logic' user.id %}" class="btn btn-outline-info">Edit</a>
+                                <a href="{% url 'user_delete_logic' user.id %}" class="btn btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between mt-4">
+                <button onclick="location.href='{% url 'main_page' %}'" class="btn btn-outline-dark">Back</button>
+                <button type="submit" class="btn btn-outline-success">{{ button_label }}</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
