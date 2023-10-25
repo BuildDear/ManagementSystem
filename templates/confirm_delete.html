@@ -3,11 +3,11 @@
 {% block content %}
 
 <div class="lists-centered-container-11">
-    <h3>Підтвердження видалення</h3>
+    <h3>Delete confirmation</h3>
     {% if is_user %}
-        <p>Ви дійсно хочете видалити користувача "{{ object.email }}"?</p>
+        <p>Do you really want to delete the user " {{ object.email }} "?</p>
     {% else %}
-        <p>Ви дійсно хочете видалити групу "{{ object.name }}"?</p>
+        <p>Do you really want to delete the group " {{ object.name }} "?</p>
     {% endif %}
 
     <form method="post">
