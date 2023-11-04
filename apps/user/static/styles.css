@@ -70,7 +70,8 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 500px;
+    width: 350px;
+    height: 300px;
     text-align: center;
     font-size: 20px;
     padding: 100px 30px;
@@ -93,12 +94,25 @@ main {
     transform: scale(1); /* Повертаємо розмір до початкового стану при натисканні */
 }
 
+
+
 /*main page*/
 
 /*lists*/
-.lists-centered-container-11 {
+.lists-centered-container {
     text-align: center; /* центрування тексту */
     max-width: 100%; /* обмеження максимальної ширини контейнера */
+    margin: 0 auto; /* автоматичний відступ зліва та справа для центрування блоку */
+    padding: 20px; /* додатковий відступ навколо змісту */
+    background-color: #f5f5f5; /* світло-сірий колір фону */
+    border-radius: 30px; /* закруглені кути */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* легка тінь */
+}
+
+.add-entity-centered-container {
+    text-align: center; /* центрування тексту */
+    max-width: 100%; /* обмеження максимальної ширини контейнера */
+    width: 400px;
     margin: 0 auto; /* автоматичний відступ зліва та справа для центрування блоку */
     padding: 20px; /* додатковий відступ навколо змісту */
     background-color: #f5f5f5; /* світло-сірий колір фону */
@@ -113,3 +127,37 @@ main {
     margin-top: 5px;
 }
 
+
+
+
+.main-buttons-container-who {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        padding: 20px;
+}
+
+.choice-title {
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        text-align: center;
+}
+
+.rounded-button-who {
+        width: 200px;
+        height: 100px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007BFF;
+        color: #FFFFFF;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+}
+
+.rounded-button-who:hover {
+        background-color: #0056b3;
+}

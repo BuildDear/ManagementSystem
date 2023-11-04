@@ -1,0 +1,96 @@
+from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import PermissionsMixin, Group, Permission
+from django.db import models
+
+
+class UserManager(BaseUserManager):
+
+    def _create_user(self, email, password, **extra_fields):
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(email=self.normalize_email(email), **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('is_manager', False)
+        return self._create_user(email, password, **extra_fields)
+
+    def create_manager(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('is_manager', True)
+        return self._create_user(email, password, **extra_fields)
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_manager', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True')
+        return self._create_user(email, password, **extra_fields)
+
+
+class GroupModel(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    description = models.CharField(max_length=20)
+
+    class Meta:
+        db_table = 'user_group'
+
+    def __str__(self):
+        return self.name
+
+    def users_count(self):
+        return self.users.all().count()
+
+
+class UserModel(AbstractBaseUser, PermissionsMixin):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField(unique=True)
+    group = models.ForeignKey(GroupModel, on_delete=models.PROTECT,
+                              related_name="users", null=True,
+                              verbose_name="custom_user_groups")
+    created = models.DateTimeField(auto_now_add=True)
+    is_manager = models.BooleanField(default=False)
+
+    groups = models.ManyToManyField(
+        Group,
+        related_name="custom_user_groups",
+        blank=True,
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+        verbose_name='groups'
+    )
+
+    # Перевизначення поля user_permissions із PermissionsMixin
+    user_permissions = models.ManyToManyField(
+        Permission,
+        related_name="custom_user_permissions",
+        blank=True,
+        help_text='Specific permissions for this user.',
+        verbose_name='user permissions'
+    )
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'email', 'password']
+
+    objects = UserManager()
+
+    class Meta:
+        db_table = 'user'
+
+    def __str__(self):
+        return self.email
+
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
+    def get_short_name(self):
+        return self.first_name
+

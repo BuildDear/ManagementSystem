@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main-buttons-container-who">
+
+    <h2 class="choice-title">Who you are?</h2>
+
+{#    <button onclick="location.href='{% url 'user_list_page' %}'" class="rounded-button-who">#}
+{#        User#}
+{#    </button>#}
+
+    <button onclick="location.href='{% url 'manager-register' %}'" class="rounded-button-who">
+        Manager
+    </button>
+
+</div>
+{% endblock %}
+

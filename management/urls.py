@@ -1,11 +1,22 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from apps.user import urls
-from apps.user.views import first_page
+from apps import manager
+from management import views
 
 urlpatterns = [
-    path('', first_page, name='first_page'),
+
+    path('', views.StartView.as_view(), name='start'),
+    path('who/', views.ChooseWhoView.as_view(), name='choose-who'),
+
     path('admin/', admin.site.urls),
-    path('main/', include(urls), name='main_page')
+
+    path('user/', include('apps.user.urls')),
+
+    path('manager/', include('apps.manager.urls')),
+
+    path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('logout/', views.CustomLogoutView.as_view(), name='logout'),
 ]
+
+
