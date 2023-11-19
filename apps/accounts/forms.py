@@ -53,11 +53,22 @@ class GroupAddForm(forms.ModelForm):
 
 class UserLoginForm(AuthenticationForm):
 
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request', None)
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-
     username = forms.EmailField(widget=forms.EmailInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter your email', 'autofocus': True}))
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter your email',
+            'autofocus': True,
+            'autocomplete': 'email'  # Add autocomplete attribute for username
+        }
+    ))
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'class': 'form-control', 'placeholder': 'Enter your password'}))
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter your password',
+            'autocomplete': 'current-password'  # Add autocomplete attribute for password
+        }
+    ))
+
+    class Meta:
+        model = UserModel
+        fields = ['email', 'password']

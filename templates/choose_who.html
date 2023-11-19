@@ -5,13 +5,17 @@
 
     <h2 class="choice-title">Who you are?</h2>
 
-{#    <button onclick="location.href='{% url 'user_list_page' %}'" class="rounded-button-who">#}
-{#        User#}
-{#    </button>#}
+    {% if user.is_authenticated %}
+        <button onclick="location.href='{% url 'user-list' %}'" class="rounded-button-who">User</button>
+    {% else %}
+         <button onclick="location.href='{% url 'user-register' %}'" class="rounded-button-who">User</button>
+    {% endif %}
 
-    <button onclick="location.href='{% url 'manager-register' %}'" class="rounded-button-who">
-        Manager
-    </button>
+    {% if user.is_authenticated %}
+        <button onclick="location.href='{% url 'user-list' %}'" class="rounded-button-who">Manager</button>
+    {% else %}
+         <button onclick="location.href='{% url 'manager-register' %}'" class="rounded-button-who">Manager</button>
+    {% endif %}
 
 </div>
 {% endblock %}

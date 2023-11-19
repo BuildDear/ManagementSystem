@@ -6,8 +6,8 @@
     <div class="add-entity-centered-container">
         <h2>{{ title }}</h2>
         <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
 
+            {% csrf_token %}
             <div class="form-group">
                 {% for field in form %}
                     <div class="mb-3">

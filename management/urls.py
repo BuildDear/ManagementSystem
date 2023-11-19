@@ -14,9 +14,10 @@ urlpatterns = [
     path('user/', include('apps.user.urls')),
 
     path('manager/', include('apps.manager.urls')),
+    path('accounts/', include('apps.accounts.urls')),
 
-    path('login/', views.CustomLoginView.as_view(), name='login'),
-    path('logout/', views.CustomLogoutView.as_view(), name='logout'),
+    # path('login/', views.CustomLoginView.as_view(), name='login'),
+    # path('logout/', views.CustomLogoutView.as_view(), name='logout'),
 ]
 
 

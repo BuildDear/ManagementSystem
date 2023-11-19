@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="lists-centered-container">
-    <h2>List of Users</h2>
+    <h2>{{ title }}</h2>
 
     <table class="table table-striped">
         <thead>
@@ -14,31 +14,43 @@
                 <th>Last Name</th>
                 <th>Group</th>
                 <th>Created</th>
-                <th>Actions</th>
+                {% if user.is_manager %}
+                    <th>Actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
-            {% for user in users %}
+            {% for person in users %}
                 <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.first_name }}</td>
-                    <td>{{ user.last_name }}</td>
-                    <td>{{ user.group }}</td>
-                    <td>{{ user.created }}</td>
-                    <td>
-                        <a href="{% url 'user-edit' user.id %}" class="btn btn-outline-info">Edit</a>
-                        <a href="{% url 'user-delete' user.id %}" class="btn btn-outline-danger">Delete</a>
-                    </td>
+                    <td>{{ person.id }}</td>
+                    <td>{{ person.email }}</td>
+                    <td>{{ person.first_name }}</td>
+                    <td>{{ person.last_name }}</td>
+                    <td>{{ person.group }}</td>
+                    <td>{{ person.created }}</td>
+                    {% if user.is_manager %}
+                        <td>
+                            <a href="{% url 'user-edit' user.id %}" class="btn btn-outline-info">Edit</a>
+                            <a href="{% url 'user-delete' user.id %}" class="btn btn-outline-danger">Delete</a>
+                        </td>
+                    {% endif %}
+
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <div class="d-flex justify-content-between w-100 mt-3">
-        <button onclick="location.href='{% url 'user-list' %}'" class="btn btn-outline-dark">Back</button>
-{#        <button onclick="location.href='{% url 'user_add_logic' %}'" class="btn btn-outline-success">Add user</button>#}
+        <button onclick="location.href='{% url 'choose-list' %}'" class="btn btn-outline-dark">Back</button>
+
+        {% if is_manager %}
+            <button onclick="location.href='{% url 'manager-register' %}'" class="btn btn-outline-success">{{ button_label }}</button>
+        {% else %}
+            <button onclick="location.href='{% url 'user-register' %}'" class="btn btn-outline-success">{{ button_label }}</button>
+        {% endif %}
+
     </div>
+
 </div>
 
 {% endblock %}

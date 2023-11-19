@@ -16,7 +16,9 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Users count</th>
-                <th>Actions</th>
+                {% if user.is_manager %}
+                    <th>Actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -26,17 +28,19 @@
                 <td>{{ group.name }}</td>
                 <td>{{ group.description }}</td>
                 <td>{{ group.users_count }}</td>
-                <td>
-                    <a href="{% url 'group_edit_logic' group.id %}" class="btn btn-outline-info">Edit</a>
-                    <a href="{% url 'group_delete_logic' group.id %}" class="btn btn-outline-danger">Delete</a>
-                </td>
+                {% if user.is_manager %}
+                    <td>
+                        <a href="{% url 'group-edit' group.id %}" class="btn btn-outline-info">Edit</a>
+                        <a href="{% url 'group-delete' group.id %}" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
     </table>
         <div class="d-flex justify-content-between w-100 mt-3">
-            <button onclick="location.href='{% url 'main_page' %}'" class="btn btn-outline-dark">Back</button>
-            <button onclick="location.href='{% url 'group_add_logic' %}'" class="btn btn-outline-success">Add group</button>
+            <button onclick="location.href='{% url 'choose-list' %}'" class="btn btn-outline-dark">Back</button>
+            <button onclick="location.href='{% url 'group-add' %}'" class="btn btn-outline-success">Add group</button>
         </div>
     </div>
 

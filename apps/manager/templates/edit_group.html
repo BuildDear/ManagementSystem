@@ -47,8 +47,8 @@
                             <td>{{ user.group }}</td>
                             <td>{{ user.created }}</td>
                             <td>
-                                <a href="{% url 'user_edit_logic' user.id %}" class="btn btn-outline-info">Edit</a>
-                                <a href="{% url 'user_delete_logic' user.id %}" class="btn btn-outline-danger">Delete</a>
+                                <a href="{% url 'user-edit' user.id %}" class="btn btn-outline-info">Edit</a>
+                                <a href="{% url 'user-delete' user.id %}" class="btn btn-outline-danger">Delete</a>
                             </td>
                         </tr>
             {% endfor %}
@@ -56,7 +56,7 @@
             </table>
 
             <div class="d-flex justify-content-between mt-4">
-                <button onclick="location.href='{% url 'main_page' %}'" class="btn btn-outline-dark">Back</button>
+                <button onclick="location.href='{% url 'choose-list' %}'" class="btn btn-outline-dark">Back</button>
                 <button type="submit" class="btn btn-outline-success">{{ button_label }}</button>
             </div>
 

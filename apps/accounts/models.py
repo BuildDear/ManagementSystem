@@ -35,6 +35,9 @@ class UserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True')
         return self._create_user(email, password, **extra_fields)
 
+    def get_by_natural_key(self, email):
+        return self.get(email=email)
+
 
 class GroupModel(models.Model):
     name = models.CharField(max_length=20, unique=True)
@@ -78,7 +81,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     )
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'email', 'password']
+    REQUIRED_FIELDS = ['first_name', 'password']
 
     objects = UserManager()
 
