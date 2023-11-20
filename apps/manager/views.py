@@ -1,6 +1,5 @@
 from django.contrib import messages
-from django.http import HttpResponseForbidden
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic, View
 
@@ -49,8 +48,12 @@ class CustomUpdateView(generic.UpdateView):
     success_url = reverse_lazy('user-list')
 
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated or not request.user.is_manager:
-            messages.error(request, "You don't have permission")
+        # Отримати об'єкт користувача, який потрібно редагувати
+        user_to_edit = get_object_or_404(UserModel, pk=kwargs['pk'])
+
+        # Перевірити, чи є поточний користувач автентифікованим і чи має він право редагувати цей профіль
+        if not request.user.is_authenticated or (not request.user.is_manager and request.user != user_to_edit):
+            messages.error(request, "You don't have permission to edit this profile.")
             return redirect('error')
 
         return super().dispatch(request, *args, **kwargs)
@@ -67,8 +70,12 @@ class CustomDeleteView(generic.DeleteView):
         return context
 
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated or not request.user.is_manager:
-            messages.error(request, "You don't have permission")
+        # Отримати об'єкт користувача, який потрібно редагувати
+        user_to_edit = get_object_or_404(UserModel, pk=kwargs['pk'])
+
+        # Перевірити, чи є поточний користувач автентифікованим і чи має він право редагувати цей профіль
+        if not request.user.is_authenticated or (not request.user.is_manager and request.user != user_to_edit):
+            messages.error(request, "You don't have permission to edit this profile.")
             return redirect('error')
 
         return super().dispatch(request, *args, **kwargs)

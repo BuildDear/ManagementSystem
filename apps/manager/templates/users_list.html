@@ -14,9 +14,7 @@
                 <th>Last Name</th>
                 <th>Group</th>
                 <th>Created</th>
-                {% if user.is_manager %}
-                    <th>Actions</th>
-                {% endif %}
+                <th>Actions</th>+
             </tr>
         </thead>
         <tbody>
@@ -28,13 +26,12 @@
                     <td>{{ person.last_name }}</td>
                     <td>{{ person.group }}</td>
                     <td>{{ person.created }}</td>
-                    {% if user.is_manager %}
+                    {% if user.is_manager or person.id == user.id %}
                         <td>
-                            <a href="{% url 'user-edit' user.id %}" class="btn btn-outline-info">Edit</a>
-                            <a href="{% url 'user-delete' user.id %}" class="btn btn-outline-danger">Delete</a>
+                            <a href="{% url 'user-edit' person.id %}" class="btn btn-outline-info">Edit</a>
+                            <a href="{% url 'user-delete' person.id %}" class="btn btn-outline-danger">Delete</a>
                         </td>
                     {% endif %}
-
                 </tr>
             {% endfor %}
         </tbody>
