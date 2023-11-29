@@ -1,24 +1,29 @@
 from django.contrib import messages
+from django.db.models import ProtectedError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic, View
 
 from apps.accounts.forms import UserRegisterForm, GroupAddForm
-from apps.accounts.models import UserModel, GroupModel
+from apps.accounts.models import UserModel, GroupModel, NoteModel
 
 
+# View for choosing between different lists (users or groups).
 class ChooseListView(generic.TemplateView):
     template_name = 'choose_lists.html'
 
 
+# View for displaying a list of regular users.
 class UserListView(generic.ListView):
     model = UserModel
     template_name = 'users_list.html'
     context_object_name = 'users'
 
+    # Filter the queryset to only include non-manager users.
     def get_queryset(self):
         return UserModel.objects.filter(is_manager=False)
 
+    # Add additional context to the template.
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'List of users'
@@ -26,14 +31,17 @@ class UserListView(generic.ListView):
         return context
 
 
+# View for displaying a list of managers.
 class ManagerListView(generic.ListView):
     model = UserModel
     template_name = 'users_list.html'
     context_object_name = 'users'
 
+    # Filter the queryset to only include manager users.
     def get_queryset(self):
         return UserModel.objects.filter(is_manager=True)
 
+    # Add additional context to the template.
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'List of managers'
@@ -41,58 +49,58 @@ class ManagerListView(generic.ListView):
         return context
 
 
+# View for updating a user's information.
 class CustomUpdateView(generic.UpdateView):
     model = UserModel
     form_class = UserRegisterForm
     template_name = 'edit_user.html'
     success_url = reverse_lazy('user-list')
 
+    # Check permissions before allowing the user to edit.
     def dispatch(self, request, *args, **kwargs):
-        # Отримати об'єкт користувача, який потрібно редагувати
         user_to_edit = get_object_or_404(UserModel, pk=kwargs['pk'])
-
-        # Перевірити, чи є поточний користувач автентифікованим і чи має він право редагувати цей профіль
         if not request.user.is_authenticated or (not request.user.is_manager and request.user != user_to_edit):
             messages.error(request, "You don't have permission to edit this profile.")
             return redirect('error')
-
         return super().dispatch(request, *args, **kwargs)
 
 
+# View for deleting a user.
 class CustomDeleteView(generic.DeleteView):
     model = UserModel
     template_name = 'confirm_delete.html'
     success_url = reverse_lazy('user-list')
 
+    # Add additional context to the template.
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_user'] = True
         return context
 
+    # Check permissions before allowing the user to delete.
     def dispatch(self, request, *args, **kwargs):
-        # Отримати об'єкт користувача, який потрібно редагувати
         user_to_edit = get_object_or_404(UserModel, pk=kwargs['pk'])
-
-        # Перевірити, чи є поточний користувач автентифікованим і чи має він право редагувати цей профіль
         if not request.user.is_authenticated or (not request.user.is_manager and request.user != user_to_edit):
             messages.error(request, "You don't have permission to edit this profile.")
             return redirect('error')
-
         return super().dispatch(request, *args, **kwargs)
 
 
+# View for displaying a list of groups.
 class GroupListView(generic.ListView):
     model = GroupModel
     template_name = 'groups_list.html'
     context_object_name = 'groups'
 
 
+# View for creating a new group.
 class GroupCreateView(generic.CreateView):
     model = GroupModel
     form_class = GroupAddForm
-    template_name = 'edit_user.html'
+    template_name = 'edit_group.html'
     success_url = reverse_lazy('group-list')
 
+    # Add additional context to the template.
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Create group'
@@ -100,52 +108,58 @@ class GroupCreateView(generic.CreateView):
         return context
 
 
+# View for updating a group's information.
 class GroupUpdateView(generic.UpdateView):
     model = GroupModel
     form_class = GroupAddForm
     template_name = 'edit_group.html'
     success_url = reverse_lazy('group-list')
 
+    # Add additional context to the template.
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Edit group'
+        context['title'] = 'Edit event'
         context['button_label'] = 'Save changes'
-        context['users'] = self.object.users.all()
+        context['notes'] = NoteModel.objects.all()
         return context
 
+    # Check permissions before allowing the user to edit.
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated or not request.user.is_manager:
+        if not request.user.is_authenticated:
             messages.error(request, "You don't have permission")
             return redirect('error')
-
         return super().dispatch(request, *args, **kwargs)
 
 
+# View for deleting a group.
 class GroupDeleteView(generic.DeleteView):
     model = GroupModel
     template_name = 'confirm_delete.html'
     success_url = reverse_lazy('group-list')
 
+    # Add additional context to the template.
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['is_user'] = False
         return context
 
+    # Check permissions and group membership before allowing deletion.
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated or not request.user.is_manager:
             messages.error(request, "You don't have permission")
             return redirect('error')
-
         return super().dispatch(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        group = self.get_object()
-        if group.users.exists():
-            messages.error(request, f"You can't delete the group ({group.name}) because it's not empty.")
-            return redirect('group_list_page')
-        return super().delete(request, *args, **kwargs)
+    # Prevent deletion of groups with members.
+    def delete(self, request, *args, **kwargs):
+        try:
+            return super().delete(request, *args, **kwargs)
+        except ProtectedError:
+            messages.error(request, "This group cannot be deleted because it is used by other objects.")
+            return redirect('some_view')
 
 
+# View for displaying an error message.
 class ErrorView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'error.html', {})

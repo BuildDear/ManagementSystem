@@ -53,13 +53,24 @@ class GroupModel(models.Model):
         return self.users.all().count()
 
 
+class NoteModel(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=50)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'note'
+
+
 class UserModel(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
-    group = models.ForeignKey(GroupModel, on_delete=models.PROTECT,
+    group = models.ForeignKey(GroupModel, on_delete=models.SET_NULL,
                               related_name="users", null=True,
                               verbose_name="custom_user_groups")
+    note = models.ForeignKey(NoteModel, on_delete=models.SET_NULL,
+                             related_name="notes", null=True)
     created = models.DateTimeField(auto_now_add=True)
     is_manager = models.BooleanField(default=False)
 
@@ -96,4 +107,3 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.first_name
-

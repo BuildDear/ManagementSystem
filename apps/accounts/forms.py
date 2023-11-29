@@ -37,6 +37,32 @@ class UserRegisterForm(forms.ModelForm):
         }
 
 
+class ManagerRegisterForm(forms.ModelForm):
+    first_name = forms.CharField(min_length=2, max_length=30,
+                                 widget=forms.TextInput(
+                                     attrs={'class': 'form-control py-4',
+                                            'placeholder': 'Enter your first name'}))
+    last_name = forms.CharField(min_length=2, max_length=30,
+                                widget=forms.TextInput(
+                                    attrs={'class': 'form-control py-4',
+                                           'placeholder': 'Enter your last name'}))
+
+    password = forms.CharField(max_length=128,
+                               widget=forms.PasswordInput(
+                                   attrs={'class': 'form-control',
+                                          'placeholder': 'Enter your password'}))
+
+    class Meta:
+        model = UserModel
+        fields = ['first_name', 'last_name', 'email', 'password']
+        exclude = ['created','group']
+        widgets = {
+            'email': forms.EmailInput(attrs={'class': 'form-control py-4',
+                                             'placeholder': 'Enter your email'}),
+
+        }
+
+
 class GroupAddForm(forms.ModelForm):
     name = forms.CharField(min_length=3, max_length=20,
                            widget=forms.TextInput(attrs={'class': 'form-control py-4',
@@ -52,7 +78,6 @@ class GroupAddForm(forms.ModelForm):
 
 
 class UserLoginForm(AuthenticationForm):
-
     username = forms.EmailField(widget=forms.EmailInput(
         attrs={
             'class': 'form-control',

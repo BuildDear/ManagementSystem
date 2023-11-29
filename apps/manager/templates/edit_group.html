@@ -24,34 +24,24 @@
                     {% endif %}
                 {% endfor %}
             </div>
-
+            <h3>Notes</h3>
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Email</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Group</th>
+                        <th>Name</th>
+                        <th>Description</th>
                         <th>Created</th>
-                        <th>Actions</th>
+{#                        <th>Created by</th>#}
                     </tr>
                 </thead>
                 <tbody>
-                     {% for user in users %}
+                     {% for note in notes %}
                         <tr>
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.first_name }}</td>
-                            <td>{{ user.last_name }}</td>
-                            <td>{{ user.group }}</td>
-                            <td>{{ user.created }}</td>
-                            <td>
-                                <a href="{% url 'user-edit' user.id %}" class="btn btn-outline-info">Edit</a>
-                                <a href="{% url 'user-delete' user.id %}" class="btn btn-outline-danger">Delete</a>
-                            </td>
+                            <td>{{ note.name }}</td>
+                            <td>{{ note.description }}</td>
+                            <td>{{ note.created }}</td>
                         </tr>
-            {% endfor %}
+                    {% endfor %}
                 </tbody>
             </table>
 
