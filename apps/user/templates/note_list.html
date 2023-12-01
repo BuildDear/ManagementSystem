@@ -15,6 +15,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Created</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -23,11 +24,10 @@
                     <td>{{ note.name }}</td>
                     <td>{{ note.description }}</td>
                     <td>{{ note.created }}</td>
-{#                    <td>#}
-{#                        <a href="{% url 'join-group' group.id %}" class="btn btn-outline-info">Enter</a>#}
-{#                        <a href="{% url 'group-edit' group.id %}" class="btn btn-outline-info">Edit</a>#}
-{#                        <a href="{% url 'group-delete' group.id %}" class="btn btn-outline-danger">Delete</a>#}
-{#                    </td>#}
+                    <td>
+                        <a href="{% url 'note-edit' note.id %}" class="btn btn-outline-info">Edit</a>
+                        <a href="{% url 'note-delete' note.id %}" class="btn btn-outline-danger">Delete</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

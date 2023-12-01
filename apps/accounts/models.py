@@ -53,6 +53,9 @@ class GroupModel(models.Model):
     def users_count(self):
         return self.users.all().count()
 
+    def notes_count(self):
+        return NoteModel.objects.filter(group=self).count()
+
 
 class NoteModel(models.Model):
     name = models.CharField(max_length=50)

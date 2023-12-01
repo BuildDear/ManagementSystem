@@ -30,6 +30,12 @@ class UserListView(generic.ListView):
         context['button_label'] = 'Create user'
         return context
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated and not request.user.is_manager:
+            messages.error(request, "You don't have permission")
+            return redirect('error')
+        return super().dispatch(request, *args, **kwargs)
+
 
 # View for displaying a list of managers.
 class ManagerListView(generic.ListView):
@@ -47,6 +53,12 @@ class ManagerListView(generic.ListView):
         context['title'] = 'List of managers'
         context['button_label'] = 'Create manager'
         return context
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated and not request.user.is_manager:
+            messages.error(request, "You don't have permission")
+            return redirect('error')
+        return super().dispatch(request, *args, **kwargs)
 
 
 # View for updating a user's information.

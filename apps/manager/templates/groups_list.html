@@ -15,8 +15,9 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Users count</th>
+                <th>Members</th>
                 <th>Created</th>
+                <th>Notes</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -28,10 +29,13 @@
                     <td>{{ group.description }}</td>
                     <td>{{ group.users_count }}</td>
                     <td>{{ group.created }}</td>
+                    <td>{{ group.notes_count }}</td>
                     <td>
                         <a href="{% url 'join-group' group.id %}" class="btn btn-outline-info">Enter</a>
-                        <a href="{% url 'group-edit' group.id %}" class="btn btn-outline-info">Edit</a>
-                        <a href="{% url 'group-delete' group.id %}" class="btn btn-outline-danger">Delete</a>
+                        {% if request.user.group == group %}
+                            <a href="{% url 'group-edit' group.id %}" class="btn btn-outline-info">Edit</a>
+                            <a href="{% url 'group-delete' group.id %}" class="btn btn-outline-danger">Delete</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

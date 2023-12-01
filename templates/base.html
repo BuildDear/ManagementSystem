@@ -17,8 +17,11 @@
         <div class="float-left mr-3">
             {% if user.is_authenticated %}
                 <a href="{% url 'choose-list' %}" class="btn btn-outline-warning">Main</a>
-                <a href="{% url 'user-list' %}" class="btn btn-outline-warning">List of users</a>
-                <a href="{% url 'manager-list' %}" class="btn btn-outline-warning">List of managers</a>
+                {% if user.is_manager %}
+                    <a href="{% url 'user-list' %}" class="btn btn-outline-warning">List of users</a>
+                    <a href="{% url 'manager-list' %}" class="btn btn-outline-warning">List of managers</a>
+                {% endif %}
+
                 <a href="{% url 'group-list' %}" class="btn btn-outline-warning">Events</a>
             {% else %}
                 <h3>You should sign in, before start</h3>
