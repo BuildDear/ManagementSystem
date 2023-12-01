@@ -166,7 +166,7 @@ class GroupCreateViewTest(TestCase):
     def test_create_view_template(self):
         response = self.client.get(reverse('group-add'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'edit_group.html')
+        self.assertTemplateUsed(response, 'enter_group.html')
 
     def test_create_group_functionality(self):
         group_data = {
@@ -198,7 +198,7 @@ class GroupUpdateViewTest(TestCase):
         self.client.login(email='manager@example.com', password='managerpassword')
         response = self.client.get(reverse('group-edit', kwargs={'pk': self.group.pk}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'edit_group.html')
+        self.assertTemplateUsed(response, 'enter_group.html')
 
     def test_update_group_functionality(self):
         self.client.login(email='manager@example.com', password='managerpassword')

@@ -42,6 +42,7 @@ class UserManager(BaseUserManager):
 class GroupModel(models.Model):
     name = models.CharField(max_length=20, unique=True)
     description = models.CharField(max_length=20)
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'user_group'
@@ -57,6 +58,7 @@ class NoteModel(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=50)
     created = models.DateTimeField(auto_now_add=True)
+    group = models.ForeignKey(GroupModel, on_delete=models.CASCADE, related_name="notes")
 
     class Meta:
         db_table = 'note'
@@ -69,8 +71,6 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     group = models.ForeignKey(GroupModel, on_delete=models.SET_NULL,
                               related_name="users", null=True,
                               verbose_name="custom_user_groups")
-    note = models.ForeignKey(NoteModel, on_delete=models.SET_NULL,
-                             related_name="notes", null=True)
     created = models.DateTimeField(auto_now_add=True)
     is_manager = models.BooleanField(default=False)
 

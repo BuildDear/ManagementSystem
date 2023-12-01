@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
-from .models import UserModel, GroupModel
+from .models import UserModel, GroupModel, NoteModel
 
 
 class UserRegisterForm(forms.ModelForm):
@@ -66,7 +66,7 @@ class ManagerRegisterForm(forms.ModelForm):
 class GroupAddForm(forms.ModelForm):
     name = forms.CharField(min_length=3, max_length=20,
                            widget=forms.TextInput(attrs={'class': 'form-control py-4',
-                                                         'placeholder': 'Enter a group name'}))
+                                                         'placeholder': 'Enter event name'}))
     description = forms.CharField(min_length=5, max_length=20,
                                   widget=forms.TextInput(attrs={'class': 'form-control py-4',
                                                                 'placeholder': 'Enter a description'}))
@@ -97,3 +97,16 @@ class UserLoginForm(AuthenticationForm):
     class Meta:
         model = UserModel
         fields = ['email', 'password']
+
+
+class NoteAddForm(forms.ModelForm):
+    name = forms.CharField(min_length=3, max_length=20,
+                           widget=forms.TextInput(attrs={'class': 'form-control py-4',
+                                                         'placeholder': 'Enter note name'}))
+    description = forms.CharField(min_length=5, max_length=20,
+                                  widget=forms.TextInput(attrs={'class': 'form-control py-4',
+                                                                'placeholder': 'Enter a description'}))
+
+    class Meta:
+        model = NoteModel
+        fields = ['name', 'description']

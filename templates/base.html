@@ -13,41 +13,42 @@
     <header>
     <h1>Managementio</h1>
 
-    <div class="float-left mr-3">
-        {% if user.is_authenticated %}
-            <a href="{% url 'choose-list' %}" class="btn btn-outline-warning">Main</a>
-            <a href="{% url 'user-list' %}" class="btn btn-outline-warning">List of users</a>
-            <a href="{% url 'manager-list' %}" class="btn btn-outline-warning">List of managers</a>
-            <a href="{% url 'group-list' %}" class="btn btn-outline-warning">Events</a>
-        {% else %}
-            <h3>You should sign in, before start</h3>
-        {% endif %}
-    </div>
+    {% if user.is_authenticated %}
+        <div class="float-left mr-3">
+            {% if user.is_authenticated %}
+                <a href="{% url 'choose-list' %}" class="btn btn-outline-warning">Main</a>
+                <a href="{% url 'user-list' %}" class="btn btn-outline-warning">List of users</a>
+                <a href="{% url 'manager-list' %}" class="btn btn-outline-warning">List of managers</a>
+                <a href="{% url 'group-list' %}" class="btn btn-outline-warning">Events</a>
+            {% else %}
+                <h3>You should sign in, before start</h3>
+            {% endif %}
+        </div>
 
-    <div class="float-right mr-3">
+        <div class="float-right mr-3">
 
-        {% if not user.is_manager %}
-            <a href="{% url 'user-edit' user.id %}" class="btn btn-outline-info">Edit</a>
-            <a href="{% url 'user-delete' user.id %}" class="btn btn-outline-danger">Delete</a>
-        {% endif %}
+            {% if not user.is_manager %}
+                <a href="{% url 'user-edit' user.id %}" class="btn btn-outline-info">Edit</a>
+                <a href="{% url 'user-delete' user.id %}" class="btn btn-outline-danger">Delete</a>
+            {% endif %}
 
-         {% if user.is_manager %}
-            <h5>Manager</h5>
-        {% else %}
-            <h5>User</h5>
-        {% endif %}
+            {% if user.is_manager %}
+                <h5>Manager</h5>
+            {% else %}
+                <h5>User</h5>
+            {% endif %}
+            {% endif %}
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn btn-secondary btn-sm">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-secondary btn-sm">Sign In</a>
+            {% endif %}
+        </div>
 
-        {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}" class="btn btn-secondary btn-sm">Logout</a>
-        {% else %}
-            <a href="{% url 'login' %}" class="btn btn-secondary btn-sm">Sign In</a>
-        {% endif %}
-    </div>
-
-</header>
-
+    </header>
 
     {% block content %}{% endblock %}
+
 
     <footer>
         <p>&copy; 2023 - All rights possibly reserved</p>

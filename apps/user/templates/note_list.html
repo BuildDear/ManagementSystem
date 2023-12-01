@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="lists-centered-container">
+
+        <h2>Notes</h2>
+        {% for message in messages %}
+            <p class="text-danger">{{ message }}</p>
+        {% endfor %}
+
+        <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for note in object_list %}
+                <tr>
+                    <td>{{ note.name }}</td>
+                    <td>{{ note.description }}</td>
+                    <td>{{ note.created }}</td>
+{#                    <td>#}
+{#                        <a href="{% url 'join-group' group.id %}" class="btn btn-outline-info">Enter</a>#}
+{#                        <a href="{% url 'group-edit' group.id %}" class="btn btn-outline-info">Edit</a>#}
+{#                        <a href="{% url 'group-delete' group.id %}" class="btn btn-outline-danger">Delete</a>#}
+{#                    </td>#}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        <div class="d-flex justify-content-between w-100 mt-3">
+            <button onclick="location.href='{% url 'group-list' %}'" class="btn btn-outline-dark">Back</button>
+            <button onclick="location.href='{% url 'note-add' %}'" class="btn btn-outline-success">Add note</button>
+        </div>
+    </div>
+
+{% endblock %}

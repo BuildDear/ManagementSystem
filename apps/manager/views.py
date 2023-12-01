@@ -97,13 +97,13 @@ class GroupListView(generic.ListView):
 class GroupCreateView(generic.CreateView):
     model = GroupModel
     form_class = GroupAddForm
-    template_name = 'edit_group.html'
+    template_name = "edit_event.html"
     success_url = reverse_lazy('group-list')
 
     # Add additional context to the template.
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Create group'
+        context['title'] = 'Create event'
         context['button_label'] = 'Create'
         return context
 
@@ -112,7 +112,7 @@ class GroupCreateView(generic.CreateView):
 class GroupUpdateView(generic.UpdateView):
     model = GroupModel
     form_class = GroupAddForm
-    template_name = 'edit_group.html'
+    template_name = 'edit_event.html'
     success_url = reverse_lazy('group-list')
 
     # Add additional context to the template.

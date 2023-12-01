@@ -24,32 +24,11 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <h3>Notes</h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Created</th>
-{#                        <th>Created by</th>#}
-                    </tr>
-                </thead>
-                <tbody>
-                     {% for note in notes %}
-                        <tr>
-                            <td>{{ note.name }}</td>
-                            <td>{{ note.description }}</td>
-                            <td>{{ note.created }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
 
             <div class="d-flex justify-content-between mt-4">
-                <button onclick="location.href='{% url 'choose-list' %}'" class="btn btn-outline-dark">Back</button>
+                <button onclick="location.href='{% url 'group-list' %}'" class="btn btn-outline-dark">Back</button>
                 <button type="submit" class="btn btn-outline-success">{{ button_label }}</button>
             </div>
-
         </form>
     </div>
 </div>
