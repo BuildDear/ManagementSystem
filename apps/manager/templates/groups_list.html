@@ -16,8 +16,8 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Members</th>
-                <th>Created</th>
                 <th>Notes</th>
+                <th>Created</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -28,11 +28,11 @@
                     <td>{{ group.name }}</td>
                     <td>{{ group.description }}</td>
                     <td>{{ group.users_count }}</td>
-                    <td>{{ group.created }}</td>
                     <td>{{ group.notes_count }}</td>
+                    <td>{{ group.created }}</td>
                     <td>
                         <a href="{% url 'join-group' group.id %}" class="btn btn-outline-info">Enter</a>
-                        {% if request.user.group == group %}
+                        {% if request.user.group == group or request.user.is_manager %}
                             <a href="{% url 'group-edit' group.id %}" class="btn btn-outline-info">Edit</a>
                             <a href="{% url 'group-delete' group.id %}" class="btn btn-outline-danger">Delete</a>
                         {% endif %}

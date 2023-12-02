@@ -31,7 +31,7 @@ class UserListView(generic.ListView):
         return context
 
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated and not request.user.is_manager:
+        if not request.user.is_authenticated or (request.user.is_authenticated and not request.user.is_manager):
             messages.error(request, "You don't have permission")
             return redirect('error')
         return super().dispatch(request, *args, **kwargs)

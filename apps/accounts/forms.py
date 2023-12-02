@@ -103,7 +103,7 @@ class NoteAddForm(forms.ModelForm):
     name = forms.CharField(min_length=3, max_length=20,
                            widget=forms.TextInput(attrs={'class': 'form-control py-4',
                                                          'placeholder': 'Enter note name'}))
-    description = forms.CharField(min_length=5, max_length=20,
+    description = forms.CharField(min_length=5, max_length=50,
                                   widget=forms.TextInput(attrs={'class': 'form-control py-4',
                                                                 'placeholder': 'Enter a description'}))
 
