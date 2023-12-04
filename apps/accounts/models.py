@@ -28,6 +28,7 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_manager', True)
+        extra_fields.setdefault('is_staff', True)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True')
@@ -85,7 +86,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
                               verbose_name="custom_user_groups")
     created = models.DateTimeField(auto_now_add=True)
     is_manager = models.BooleanField(default=False)
-
+    is_staff = models.BooleanField(default=False)
     groups = models.ManyToManyField(
         Group,
         related_name="custom_user_groups",

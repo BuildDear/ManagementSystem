@@ -4,11 +4,18 @@ FROM python:3.11
 # Встановлення робочої директорії в контейнері
 WORKDIR /app
 
-# Копіювання файлів проекту в контейнер
-COPY . /app
+# Створення користувача для безпеки
+RUN useradd -m myuser
+USER myuser
+
+# Копіювання лише файлу з залежностями
+COPY requirements.txt .
 
 # Встановлення залежностей з requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Копіювання решти файлів проекту в контейнер
+COPY --chown=myuser:myuser . .
 
 # Встановлення порту, на якому буде працювати застосунок
 EXPOSE 8000
