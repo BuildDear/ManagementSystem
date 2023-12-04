@@ -7,7 +7,7 @@
     <div class="add-entity-centered-container">
 
         <h2>Edit</h2>
-        <form method="post" action="{{ action_url }}">
+        <form method="post" action="{{ request.path }}">
             {% csrf_token %}
 
             <div class="form-group">

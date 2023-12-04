@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.db.models import ProtectedError
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic, View
@@ -98,6 +99,8 @@ class CustomDeleteView(generic.DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
 
+#  ===========  REST URL METHOD  ===========
+
 # View for displaying a list of groups.
 class GroupListView(generic.ListView):
     model = GroupModel
@@ -171,7 +174,61 @@ class GroupDeleteView(generic.DeleteView):
             return redirect('some_view')
 
 
-# View for displaying an error message.
+# # View for displaying an error message.
 class ErrorView(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'error.html', {})
+
+
+#   ===========  REST HTTP METHOD  ===========
+
+# class EventView(View):
+#     template_list = 'groups_list.html'
+#     template_edit = 'edit_event.html'
+#     template_delete = 'confirm_delete.html'
+#     success_url = reverse_lazy('user-list')
+#
+#     def get(self, request, *args, **kwargs):
+#         if 'id' in kwargs:
+#             group = get_object_or_404(GroupModel, pk=kwargs['id'])
+#             form = GroupAddForm(instance=group)
+#             return render(request, self.template_edit, {'form': form, 'group': group})
+#
+#         groups = GroupModel.objects.all()
+#         return render(request, self.template_list, {'groups': groups})
+#
+#     def post(self, request, *args, **kwargs):
+#         if 'id' in kwargs:
+#             group = get_object_or_404(GroupModel, pk=kwargs['id'])
+#             form = GroupAddForm(request.POST, instance=group)
+#         else:
+#             form = GroupAddForm(request.POST)
+#
+#         if form.is_valid():
+#             form.save()
+#             return redirect(self.success_url)
+#         return render(request, self.template_edit, {'form': form})
+#
+#     def delete(self, request, *args, **kwargs):
+#         group = get_object_or_404(GroupModel, pk=kwargs['id'])
+#         try:
+#             group.delete()
+#             return redirect(self.success_url)
+#         except ProtectedError:
+#             messages.error(request, "This group cannot be deleted because it is used by other objects.")
+#             return redirect('some_view')
+#
+#     def patch(self, request, *args, **kwargs):
+#         if 'id' in kwargs:
+#             group = get_object_or_404(GroupModel, pk=kwargs['id'])
+#             form = GroupAddForm(request.POST, instance=group)
+#         else:
+#             return JsonResponse({'error': 'Invalid request'}, status=400)
+#
+#         if form.is_valid():
+#             form.save()
+#             return JsonResponse({'message': 'Group updated successfully.'}, status=200)
+#
+#         return JsonResponse({'error': 'Invalid data'}, status=400)
+
+

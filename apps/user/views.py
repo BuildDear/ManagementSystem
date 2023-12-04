@@ -32,6 +32,12 @@ class NoteListView(generic.ListView):
         user_group = self.request.user.group
         return NoteModel.objects.filter(group=user_group)
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, "You don't have permission")
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
+
 
 class NoteCreateView(generic.CreateView):
     model = NoteModel
@@ -49,6 +55,12 @@ class NoteCreateView(generic.CreateView):
         form.instance.group = self.request.user.group
         return super().form_valid(form)
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, "You don't have permission")
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
+
 
 class NoteUpdateView(generic.UpdateView):
     model = NoteModel
@@ -62,6 +74,12 @@ class NoteUpdateView(generic.UpdateView):
         context['title'] = 'Edit note'
         context['button_label'] = 'Save changes'
         return context
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, "You don't have permission")
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class NoteDeleteView(generic.DeleteView):
@@ -83,3 +101,9 @@ class NoteDeleteView(generic.DeleteView):
         except ProtectedError:
             messages.error(request, "This group cannot be deleted because it is used by other objects.")
             return redirect('some_view')
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, "You don't have permission")
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)

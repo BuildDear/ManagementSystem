@@ -5,7 +5,7 @@
 <div class="d-flex align-items-center justify-content-center" style="height: 100vh; border-radius: 30px;">
     <div class="lists-centered-container-11">
         <h2>{{ title }}</h2>
-        <form method="post" action="{{ action_url }}">
+        <form method="post" action="{{ request.path }}">
             {% csrf_token %}
 
             <div class="form-row">

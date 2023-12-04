@@ -56,6 +56,9 @@ class GroupModel(models.Model):
     def notes_count(self):
         return NoteModel.objects.filter(group=self).count()
 
+    def get_all_notes(self):
+        return self.notes.all()
+
 
 class NoteModel(models.Model):
     name = models.CharField(max_length=50)
@@ -65,6 +68,12 @@ class NoteModel(models.Model):
 
     class Meta:
         db_table = 'note'
+
+    def get_creation_date(self):
+        return self.created.strftime('%Y-%m-%d %H:%M')
+
+    def belongs_to_user(self, user):
+        return self.group == user.group
 
 
 class UserModel(AbstractBaseUser, PermissionsMixin):
@@ -110,3 +119,14 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.first_name
+
+    def is_member_of_group(self, group_name):
+        return self.group.name == group_name if self.group else False
+
+    def display_user_permissions(self):
+        permissions = set(self.user_permissions.all())
+        for group in self.groups.all():
+            permissions |= set(group.permissions.all())
+        return [perm.codename for perm in permissions]
+
+
