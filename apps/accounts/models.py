@@ -95,7 +95,6 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         verbose_name='groups'
     )
 
-    # Перевизначення поля user_permissions із PermissionsMixin
     user_permissions = models.ManyToManyField(
         Permission,
         related_name="custom_user_permissions",

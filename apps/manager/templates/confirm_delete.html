@@ -10,7 +10,7 @@
         <p>Do you really want to delete the group with name {{ object.name }} ?</p>
     {% endif %}
 
-    <form method="post" action="{{ request.path }}">
+    <form id="deleteForm" action="{{ request.path }}">
         {% csrf_token %}
 
          {% if user.is_manager %}

@@ -99,7 +99,7 @@ class CustomLoginView(LoginView):
     # Redirecting to a specific URL after successful login.
     def get_success_url(self):
         logger.info(f"Перенаправлення на {'user-list'}")
-        return reverse_lazy('user-list')
+        return reverse_lazy('choose-list')
 
 
 # Custom logout view.
