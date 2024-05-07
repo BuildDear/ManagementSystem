@@ -57,14 +57,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'management.wsgi.application'
 
+# DATABASES = {
+#      'default': {
+#         'ENGINE': config('SQL_ENGINE'),
+#         'NAME': config('SQL_NAME'),
+#         'USER': config('SQL_USER'),
+#         'PASSWORD': '',
+#         'HOST': config('SQL_HOST'),
+#         'PORT': config('SQL_PORT'),
+#     }
+# }
+
 DATABASES = {
-     'default': {
-        'ENGINE': config('SQL_ENGINE'),
-        'NAME': config('SQL_NAME'),
-        'USER': config('SQL_USER'),
-        'PASSWORD': '',
-        'HOST': config('SQL_HOST'),
-        'PORT': config('SQL_PORT'),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -105,22 +112,22 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',  # Ви можете змінити рівень на INFO або WARNING, залежно від ваших потреб
-            'propagate': True,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',  # Ви можете змінити рівень на INFO або WARNING, залежно від ваших потреб
+#             'propagate': True,
+#         },
+#     },
+# }
 
 AUTH_USER_MODEL = 'accounts.UserModel'
 
